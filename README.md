@@ -1,135 +1,131 @@
-# RoueStore — Site de vente en ligne
+# Site vitrine — Un seul produit
 
-Site vitrine e-commerce statique (**HTML / CSS / JavaScript**, sans backend)
-avec panier, filtres, recherche et mode sombre. Idéal comme base pour
-une petite boutique en ligne.
+Site vitrine e-commerce pour **un seul produit** : présentation, points
+forts, "comment ça marche", avis clients, FAQ et formulaire de commande.
+Tout est dans **un seul fichier** (`index.html`) — HTML, CSS et JavaScript
+regroupés ensemble, pour que ça marche à coup sûr, peu importe comment tu
+l'ouvres (double-clic, Live Server, hébergement en ligne...).
 
 ## 🚀 Comment voir le site
 
-Aucune installation nécessaire : ouvre simplement le fichier **`index.html`**
-avec ton navigateur (double-clic dessus, ou clic droit → "Ouvrir avec...").
-
-Structure du projet :
+Double-clique simplement sur **`index.html`** — il s'ouvre dans ton
+navigateur (Chrome, Edge, Firefox...) et fonctionne immédiatement, sans
+rien installer.
 
 ```
 roue/
-├── index.html        → la structure de toutes les pages/sections
-├── css/
-│   └── style.css     → les couleurs, polices, mise en page
-├── js/
-│   └── script.js      → les produits, le panier, les interactions
-└── images/            → mets tes photos de produits ici
+├── index.html   → TOUT le site (structure + style + interactions)
+└── images/       → mets tes vraies photos ici (optionnel)
 ```
 
-## 🛒 Fonctionnalités déjà incluses
+## ✏️ Modifier le produit (le plus important)
 
-- Catalogue de produits avec catégories, recherche et tri par prix/nom
-- Fiche produit (vue rapide) au clic sur le nom d'un produit
-- Panier latéral avec quantités, suppression, total, sauvegardé
-  automatiquement (le panier reste rempli même si on ferme le navigateur)
-- Simulation de commande (formulaire) — **aucun paiement réel**, c'est une démo
-- Mode sombre / clair (bouton 🌙 en haut à droite)
-- Menu mobile responsive (site adapté téléphone/tablette)
-- Newsletter (formulaire de démo, n'envoie rien réellement)
+Ouvre `index.html` avec un éditeur de texte (ex: [VS Code](https://code.visualstudio.com/),
+gratuit) et cherche la balise `<script>` vers la fin du fichier. Tout en
+haut de ce `<script>`, tu trouveras des blocs faciles à modifier :
 
-## ✏️ Modifier les produits (le plus important)
-
-Tout se passe dans **`js/script.js`**, tout en haut du fichier, dans le
-tableau `PRODUCTS`. Chaque produit est un bloc comme celui-ci :
-
+### Le produit lui-même
 ```js
-{
-  id: 1,
-  name: "Jante Alu Sport 18\"",
-  category: "jantes",          // jantes | pneus | accessoires | entretien
-  price: 189.90,
-  oldPrice: 219.90,             // prix barré, ou null si pas de promo
-  rating: 4.8,                  // note sur 5
-  badge: "Promo",               // "Promo", "Nouveau", ou null
-  image: "",                    // ex: "images/jante1.jpg"
-  emoji: "🛞",                  // affiché si pas d'image
-  description: "..."            // texte affiché dans la vue rapide
-}
+const PRODUCT = {
+  name: "Nom Du Produit",
+  tagline: "Une phrase courte qui explique le produit.",
+  price: 49.90,
+  oldPrice: 64.90,      // prix barré, mets `null` si pas de promo
+  reviewCount: 128,
+  image: "",             // ex: "images/produit.jpg"
+  emoji: "📦"            // affiché tant qu'il n'y a pas d'image
+};
+```
+Change simplement les valeurs. Tant que `image` est vide (`""`), c'est
+l'emoji qui s'affiche à la place de la photo.
+
+### Les points forts (section "Pourquoi ce produit")
+```js
+const FEATURES = [
+  { icon: "⚡", title: "Rapide", text: "..." },
+  ...
+];
+```
+Ajoute, modifie ou supprime des blocs `{ ... }` dans ce tableau — autant
+que tu veux.
+
+### "Comment ça marche"
+```js
+const STEPS = [
+  { title: "Tu commandes", text: "..." },
+  ...
+];
 ```
 
-### Pour changer un produit existant
-Modifie simplement les valeurs (nom, prix, description...).
+### Les avis clients
+```js
+const TESTIMONIALS = [
+  { name: "Camille R.", initials: "CR", quote: "...", stars: 5 },
+  ...
+];
+```
 
-### Pour ajouter un nouveau produit
-Copie un bloc `{ ... }` entier, colle-le à la fin de la liste (avant le `]`
-final), et change au minimum le `id` (il doit être unique, donc prends
-le prochain numéro libre) et les autres informations.
+### La FAQ
+```js
+const FAQS = [
+  { q: "Ma question ?", a: "Ma réponse." },
+  ...
+];
+```
 
-### Pour supprimer un produit
-Supprime tout son bloc `{ ... },`.
+Pour chaque liste, il suffit de copier/coller un bloc `{ ... },` pour en
+ajouter un nouveau, ou de le supprimer pour en retirer un.
 
-## 🖼️ Ajouter des vraies photos
+## 🖼️ Ajouter une vraie photo du produit
 
-1. Mets tes images dans le dossier `images/` (ex: `images/jante1.jpg`).
-   Formats conseillés : `.jpg`, `.png` ou `.webp`, poids léger si possible.
-2. Dans `js/script.js`, sur le produit concerné, remplace :
+1. Mets ta photo dans le dossier `images/` (ex: `images/produit.jpg`).
+2. Dans le bloc `PRODUCT`, remplace :
    ```js
    image: "",
    ```
    par :
    ```js
-   image: "images/jante1.jpg",
+   image: "images/produit.jpg",
    ```
-   Tant que `image` est vide (`""`), c'est l'emoji qui s'affiche à la place —
-   pratique en attendant d'avoir de vraies photos.
-
-Le logo et les images de la section "Accueil" sont pour l'instant des
-emojis (🛞) directement dans `index.html` — tu peux les remplacer par une
-balise `<img src="images/logo.png">` si tu as un logo.
 
 ## 🎨 Changer les couleurs
 
-Tout en haut de **`css/style.css`**, dans le bloc `:root { ... }` :
+Tout en haut du fichier, dans la balise `<style>`, cherche ce bloc :
 
 ```css
 :root {
-  --color-primary: #ff5722;   /* couleur principale (boutons, prix...) */
-  --color-primary-dark: #e64a19;
+  --color-primary: #0f766e;   /* couleur principale (boutons, prix) */
+  --color-accent: #f4a340;    /* petite touche de couleur */
   ...
 }
 ```
 
-Change juste le code couleur (ex: `#2563eb` pour du bleu) et toutes les
-boutons/liens/prix changeront automatiquement partout sur le site.
+Change juste les codes couleur (ex: `#2563eb` pour du bleu) et tout le
+site s'adapte automatiquement.
 
-## 📝 Changer les textes
+## 📝 Changer les textes fixes
 
-Tous les textes (titres, descriptions, adresse, téléphone, réseaux sociaux...)
-sont directement dans **`index.html`**. Ouvre le fichier avec un éditeur de
-texte (ex: [VS Code](https://code.visualstudio.com/), gratuit) et cherche le
-texte à modifier avec Ctrl+F, puis remplace-le.
-
-Sections à personnaliser en priorité :
-- `<title>` et `<meta name="description">` en haut du fichier (nom du site
-  dans l'onglet du navigateur et sur Google)
-- Section `hero` (le grand titre d'accueil)
-- Section `apropos` (qui êtes-vous, vos avantages)
-- Section `contact` / footer (adresse, téléphone, email, réseaux sociaux)
+Le titre du site, le nom dans le menu, l'adresse mail/téléphone du footer,
+etc. sont écrits directement dans le HTML (la partie entre `<body>` et
+`<script>`). Cherche le texte avec Ctrl+F dans ton éditeur et remplace-le.
 
 ## 🌍 Mettre le site en ligne (gratuit)
 
-Le plus simple pour un site comme celui-ci est **GitHub Pages** :
-
-1. Pousse ce projet sur GitHub (déjà fait si tu lis ce fichier depuis le repo).
-2. Sur GitHub : Settings → Pages → Source → choisis la branche `main` → Save.
-3. Ton site sera accessible à une adresse du type
-   `https://<ton-pseudo>.github.io/<nom-du-repo>/`.
+**GitHub Pages** (le plus simple si le projet est déjà sur GitHub) :
+1. Sur la page du repo GitHub → **Settings** → **Pages**
+2. Source : "Deploy from a branch", choisis ta branche et le dossier `/ (root)`
+3. Sauvegarde — le site sera visible à une adresse du type
+   `https://<pseudo>.github.io/<repo>/`
 
 Alternatives tout aussi simples : [Netlify](https://www.netlify.com) ou
-[Vercel](https://vercel.com) — il suffit de glisser-déposer le dossier.
+[Vercel](https://vercel.com) — glisse-dépose simplement le dossier.
 
 ## ⚠️ Limites de cette démo
 
-- Il n'y a **pas de vraie base de données** : les produits sont écrits en dur
-  dans le fichier JavaScript.
-- Il n'y a **pas de vrai paiement** (pas de Stripe/PayPal branché) : le
-  formulaire de commande simule juste une confirmation.
-- Pour une vraie boutique avec gestion des stocks, comptes clients et
-  paiement réel, il faudra à terme ajouter un backend (ex: Shopify, WooCommerce,
-  ou un développement sur-mesure) — mais ce site est déjà parfaitement
-  fonctionnel comme vitrine ou pour démarrer.
+- Pas de vraie base de données : le produit est écrit en dur dans le fichier.
+- Pas de vrai paiement (pas de Stripe/PayPal branché) : le formulaire de
+  commande simule juste une confirmation.
+- Pour une vraie boutique avec paiement réel et gestion des stocks, il
+  faudra un jour ajouter un vrai système derrière (Shopify, Stripe,
+  développement sur-mesure...) — mais ce site est déjà parfaitement
+  fonctionnel comme vitrine pour présenter et vendre un produit.
